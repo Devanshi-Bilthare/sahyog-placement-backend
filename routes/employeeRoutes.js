@@ -9,12 +9,12 @@ router.post('/',Register)
 router.post('/login',Login)
 
 
-router.put('/update/:id',isAdmin,update)
+router.put('/update/:id',update)
 
-router.get('/getAll',isAdmin,getAllEmployees)
+router.get('/getAll',getAllEmployees)
 
 router.get('/getSingleEmploye/:id',getSingleEmployees)
 
-router.delete('/delete/:id',isAdmin,deleteEmployee)
+router.delete('/delete/:id',deleteEmployee)
 
 module.exports = router

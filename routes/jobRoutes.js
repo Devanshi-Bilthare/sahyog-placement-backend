@@ -3,11 +3,11 @@ const { Create, EditJob, getAllJobs, Delete, getSingleJob } = require('../contro
 const { isAdmin } = require('../middlewares/authMiddlewares')
 const router = express.Router()
 
-router.post('/create',isAdmin,Create)
+router.post('/create',Create)
 
 router.put('/edit/:id',EditJob)
 
-router.get('/getAll',isAdmin,getAllJobs)
+router.get('/getAll',getAllJobs)
 router.get('/get/:id',getSingleJob)
 
 router.delete('/delete/:id',Delete)
