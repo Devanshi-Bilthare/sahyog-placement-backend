@@ -4,7 +4,7 @@ const { Register, Login, update, getAllEmployees, deleteEmployee, getSingleEmplo
 const { isAdmin } = require('../middlewares/authMiddlewares')
 const router = express.Router()
 
-router.post('/',isAdmin,Register)
+router.post('/',Register)
 
 router.post('/login',Login)
 
