@@ -6,9 +6,9 @@ const router = express.Router()
 router.post('/register',Register)
 
 
-router.put('/edit/:id',isAdmin,Edit)
+router.put('/edit/:id',Edit)
 
-router.delete('/delete/:id',isAdmin,Delete)
+router.delete('/delete/:id',Delete)
 
 router.get('/getAll',GetAllCompany)
 
