@@ -38,7 +38,23 @@ const Create = asyncHandler(async (req, res) => {
 
 const EditJob = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { companyName, role, experienceRequired, skillsRequired, numberOfJobOpenings, salary, jobLocation, jobDescription, deadline, ageRequired, education, gender, allotedTo, status, mail } = req.body;
+    const {
+        companyName,
+        role,
+        experienceRequired,
+        skillsRequired,
+        numberOfJobOpenings,
+        salary,
+        jobLocation,
+        jobDescription,
+        deadline,
+        ageRequired,
+        education,
+        gender,
+        allotedTo,
+        status,
+        mail
+    } = req.body;
 
     try {
         const job = await JobModel.findById(id);
@@ -57,10 +73,11 @@ const EditJob = asyncHandler(async (req, res) => {
                 res.status(404);
                 throw new Error('Company not found');
             }
-            job.companyId = company._id; 
+            job.companyId = company._id;
             job.companyName = companyName;
         }
 
+        // Update job fields
         job.role = role || job.role;
         job.experienceRequired = experienceRequired || job.experienceRequired;
         job.skillsRequired = skillsRequired || job.skillsRequired;
@@ -72,29 +89,33 @@ const EditJob = asyncHandler(async (req, res) => {
         job.ageRequired = ageRequired || job.ageRequired;
         job.education = education || job.education;
         job.gender = gender || job.gender;
-        job.allotedTo = allotedTo || job.allotedTo;
         job.status = status || job.status;
         job.mail = mail || job.mail;
 
-        const updatedJob = await job.save();
+        // Update `allotedTo` only if it has changed
+        if (allotedTo && allotedTo !== previousAllotedTo) {
+            job.allotedTo = allotedTo;
 
-        // Handle previous allotment removal
-        if (previousAllotedTo && previousAllotedTo !== allotedTo) {
-            const previousEmployee = await Employee.findById(previousAllotedTo);
-            if (previousEmployee) {
-                previousEmployee.allotedVacancies = previousEmployee.allotedVacancies.filter(jobId => jobId.toString() !== id);
-                await previousEmployee.save();
+            // Handle previous allotment removal
+            if (previousAllotedTo) {
+                const previousEmployee = await Employee.findById(previousAllotedTo);
+                if (previousEmployee) {
+                    previousEmployee.allotedVacancies = previousEmployee.allotedVacancies.filter(
+                        jobId => jobId.toString() !== id
+                    );
+                    await previousEmployee.save();
+                }
             }
-        }
 
-        // Handle new allotment addition
-        if (allotedTo) {
+            // Handle new allotment addition
             const newEmployee = await Employee.findById(allotedTo);
             if (newEmployee) {
-                newEmployee.allotedVacancies.push(updatedJob._id);
+                newEmployee.allotedVacancies.push(job._id);
                 await newEmployee.save();
             }
         }
+
+        const updatedJob = await job.save();
 
         res.json({ message: 'Job updated successfully!', job: updatedJob });
     } catch (err) {
@@ -102,6 +123,7 @@ const EditJob = asyncHandler(async (req, res) => {
         throw new Error(err.message);
     }
 });
+
 
 
 const Delete = asyncHandler(async (req, res) => {
