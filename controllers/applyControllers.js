@@ -6,15 +6,16 @@ const asyncHandler = require('express-async-handler');
 const applyJob = asyncHandler(async (req, res) => {
     try {
         const {jobId,candidateId} = req.body
+        const user = await Candidate.findById(candidateId)
         await ApplyModel.create({
             jobId,
-            candidateId: candidateId || req.user._id
+            candidateId: candidateId
         })
         const job = await JobModel.findById(jobId)
         console.log(job)
-        req.user.jobsApplied.push(jobId)
-        job.AppliedBy.push(req.user._id)
-        await req.user.save()
+        user?.jobsApplied.push(jobId)
+        job.AppliedBy.push(user._id)
+        await user.save()
         await job.save()
 
         res.json("job applied")
