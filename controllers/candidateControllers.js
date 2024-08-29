@@ -24,23 +24,21 @@ const Register = asyncHandler(async (req, res) => {
         throw new Error('Candidate already exists');
     }
 
-    console.log(req.files)
     let resumeUrl = '';
-    // if (req.files && req.files.resumeUrl) {
-    //     const file = req.files.resumeUrl;
+    if (req.files && req.files.resumeUrl) {
+        const file = req.files.resumeUrl;
 
-    //     try {
-    //         const result = await cloudinary.uploader.upload(file.tempFilePath, {
-    //             resource_type: 'raw',
-    //             folder: 'resumes', 
-    //         });
-    //         resumeUrl = result.secure_url; 
-    //     } catch (error) {
-    //         throw new Error('File upload failed');
-    //     }
-    // } else {
-    //     throw new Error('No file uploaded');
-    // }
+        try {
+            const result = await cloudinary.uploader.upload(file.tempFilePath, {
+                folder: 'resumes',
+            });
+            resumeUrl = result.secure_url; 
+        } catch (error) {
+            throw new Error('File upload failed');
+        }
+    } else {
+        throw new Error('No file uploaded');
+    }
 
     const newCandidate = await CandidateModel.create({
         ...req.body,

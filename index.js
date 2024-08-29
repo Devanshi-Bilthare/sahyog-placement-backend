@@ -20,10 +20,14 @@ const morgan = require('morgan')
 app.use(morgan('dev'))
 app.use(cors())
 
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use(fileUpload({ useTempFiles: true }));
+
 
 app.use('/api/candidate',candidateRouter)
 app.use('/api/company',companyRouter)
