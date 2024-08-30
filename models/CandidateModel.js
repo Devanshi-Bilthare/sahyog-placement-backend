@@ -11,6 +11,7 @@ const candidateSchema = new mongoose.Schema({
   },
   mobile: {
     type: String,
+    unique:true,
     // required: [true, 'Mobile number is required'],
     trim: true,
     match: [
