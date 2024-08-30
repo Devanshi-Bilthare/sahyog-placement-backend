@@ -36,9 +36,7 @@ const Register = asyncHandler(async (req, res) => {
         } catch (error) {
             throw new Error('File upload failed');
         }
-    } else {
-        throw new Error('No file uploaded');
-    }
+    } 
 
     const newCandidate = await CandidateModel.create({
         ...req.body,
