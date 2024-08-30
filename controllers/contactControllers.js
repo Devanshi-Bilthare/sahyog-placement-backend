@@ -63,4 +63,4 @@ const getAll = asyncHandler(async (req, res) => {
     res.json(allEnquiry)
 });
 
-module.exports = { createEnquiry };
+module.exports = { createEnquiry,getAll };
