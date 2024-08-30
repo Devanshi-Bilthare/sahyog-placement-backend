@@ -53,7 +53,7 @@ const companySchema = new mongoose.Schema({
     type: String,
     // required: [true, 'Industry is required'],
     trim: true,
-    minlength: [2, 'Industry must be at least 2 characters long'],
+    // minlength: [2, 'Industry must be at least 2 characters long'],
   },
   note:{
     type: String,
