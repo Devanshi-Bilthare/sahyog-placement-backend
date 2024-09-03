@@ -3,10 +3,14 @@ const JobModel = require('../models/JobModel')
 const asyncHandler = require('express-async-handler')
 
 const Register = asyncHandler( async(req,res)=>{
-    const { companyName, companyWebsite, city, address, industry, contactPersonName, contactPersonMobile, contactPersonEmail, jobs } = req.body;
+    let { companyName, companyWebsite, city, address, industry, contactPersonName, contactPersonMobile, contactPersonEmail, jobs } = req.body;
 
     const findCompany = await CompanyModel.findOne({ companyName });
     console.log(req.body);
+
+    if (contactPersonEmail === "") {
+        contactPersonEmail = null;  // Or simply omit this field if not required
+      }
     
     if (!findCompany) {
         const newCompany = await CompanyModel.create({
