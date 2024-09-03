@@ -26,7 +26,7 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     // required: [true, 'Address is required'], 
     trim: true,
-    minlength: [5, 'Address must be at least 5 characters long'], 
+    // minlength: [5, 'Address must be at least 5 characters long'], 
   },
   password:{
     type: String,
@@ -47,7 +47,7 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     // required: [true, 'City is required'],
     trim: true,
-    minlength: [2, 'City name must be at least 2 characters long'], 
+    // minlength: [2, 'City name must be at least 2 characters long'], 
   },
   gender:{
     type:String
