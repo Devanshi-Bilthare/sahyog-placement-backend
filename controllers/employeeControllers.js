@@ -59,7 +59,7 @@ const update = asyncHandler(async(req,res)=>{
 
 const getAllEmployees = asyncHandler(async (req, res) => {
     try {
-        const allEmployees = await EmployeeModel.find();
+        const allEmployees = await EmployeeModel.find().populate('allotedVacancies');
         console.log("All Employees:", allEmployees); // Logs to confirm data retrieval
 
         if (!allEmployees) {
