@@ -4,8 +4,8 @@ const asyncHandler = require('express-async-handler')
 const {generateRefreshToken} = require('../config/refreshToken')
 
 const Register = asyncHandler( async(req,res)=>{
-    const {email} = req.body
-    const findEmployee = await EmployeeModel.findOne({email})
+    const {mobile} = req.body
+    const findEmployee = await EmployeeModel.findOne({mobile})
     console.log(req.body)
     if(!findEmployee){
         const newEmployee =await EmployeeModel.create(req.body)

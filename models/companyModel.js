@@ -9,18 +9,18 @@ const companySchema = new mongoose.Schema({
   },
   companyWebsite: {
     type: String,
-    required: [true, 'Company website is required'],
+    // required: [true, 'Company website is required'],
     trim: true,
   },
   contactPersonName: {
     type: String,
-    required: [true, 'Contact person name is required'],
+    // required: [true, 'Contact person name is required'],
     trim: true,
-    minlength: [2, 'Contact person name must be at least 2 characters long'],
+    // minlength: [2, 'Contact person name must be at least 2 characters long'],
   },
   contactPersonMobile: {
     type: String,
-    required: [true, 'Contact person mobile number is required'],
+    // required: [true, 'Contact person mobile number is required'],
     trim: true,
     match: [
         /^[0-9]{10}$/,
@@ -29,7 +29,7 @@ const companySchema = new mongoose.Schema({
   },
   contactPersonEmail: {
     type: String,
-    required: [true, 'Contact person email is required'],
+    // required: [true, 'Contact person email is required'],
     trim: true,
     unique: true,
     match: [
@@ -39,15 +39,15 @@ const companySchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: [true, 'Address is required'],
+    // required: [true, 'Address is required'],
     trim: true,
-    minlength: [5, 'Address must be at least 5 characters long'],
+    // minlength: [5, 'Address must be at least 5 characters long'],
   },
   city: {
     type: String,
-    required: [true, 'City is required'],
+    // required: [true, 'City is required'],
     trim: true,
-    minlength: [2, 'City name must be at least 2 characters long'],
+    // minlength: [2, 'City name must be at least 2 characters long'],
   },
   industry: {
     type: String,

@@ -14,7 +14,7 @@ const employeeSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'Email is required'], 
+    // required: [true, 'Email is required'], 
     trim: true,
     unique: true,
     match: [
@@ -35,6 +35,7 @@ const employeeSchema = new mongoose.Schema({
   },
   mobile: {
     type: String,
+    unique:true,
     // required: [true, 'Mobile number is required'],
     trim: true,
     match: [
