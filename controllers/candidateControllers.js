@@ -17,35 +17,57 @@ const cloudinary = require('../config/cloudinaryConfig');
 // })
 
 const Register = asyncHandler(async (req, res) => {
-    const { email } = req.body;
+    const { email, mobile } = req.body;
 
-    const findCandidate = await CandidateModel.findOne({ email });
-    if (findCandidate) {
-        throw new Error('Candidate already exists');
+    // Check if all required fields are provided
+    if (!email || !mobile) {
+        return res.status(400).json({ message: 'Email and mobile number are required' });
+    }
+
+    // Check if the candidate already exists based on email
+    const findCandidateByEmail = await CandidateModel.findOne({ email });
+    if (findCandidateByEmail) {
+        return res.status(409).json({ message: 'Candidate with this email already exists' });
+    }
+
+    // Check if the candidate already exists based on mobile number
+    const findCandidateByMobile = await CandidateModel.findOne({ mobile });
+    if (findCandidateByMobile) {
+        return res.status(409).json({ message: 'Candidate with this mobile number already exists' });
     }
 
     let resumeUrl = '';
     if (req.files && req.files.resumeUrl) {
         const file = req.files.resumeUrl;
 
+        // Validate file type and size before uploading (optional)
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        if (!allowedTypes.includes(file.mimetype)) {
+            return res.status(400).json({ message: 'Invalid file type. Please upload a PDF or Word document.' });
+        }
+
         try {
             const result = await cloudinary.uploader.upload(file.tempFilePath, {
                 folder: 'resumes',
             });
-            resumeUrl = result.secure_url; 
+            resumeUrl = result.secure_url;
         } catch (error) {
-            throw new Error('File upload failed');
+            return res.status(500).json({ message: 'File upload failed', error: error.message });
         }
-    } 
+    }
 
-    const newCandidate = await CandidateModel.create({
-        ...req.body,
-        resumeUrl, 
-    });
+    try {
+        const newCandidate = await CandidateModel.create({
+            ...req.body,
+            resumeUrl,
+        });
 
-    const token = generateToken(newCandidate._id);
+        const token = generateToken(newCandidate._id);
 
-    res.json({ newCandidate, token });
+        res.status(201).json({ newCandidate, token });
+    } catch (error) {
+        res.status(500).json({ message: 'Registration failed', error: error.message });
+    }
 });
 
 const Login = asyncHandler(async(req,res)=>{
