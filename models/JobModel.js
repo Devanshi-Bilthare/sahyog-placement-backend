@@ -76,6 +76,9 @@ const jobSchema = new mongoose.Schema({
   },
   jobFunction:{
     type:String
+  },
+  interviewSheduled:{
+    type:Date,
   }
   
 }, {

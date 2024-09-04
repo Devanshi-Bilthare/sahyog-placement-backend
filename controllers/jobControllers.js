@@ -54,7 +54,8 @@ const EditJob = asyncHandler(async (req, res) => {
         allotedTo,
         status,
         mail,
-        jobFunction
+        jobFunction,
+        interviewSheduled
     } = req.body;
 
     try {
@@ -93,6 +94,7 @@ const EditJob = asyncHandler(async (req, res) => {
         job.status = status || job.status;
         job.mail = mail || job.mail;
         job.jobFunction = jobFunction || job.jobFunction;
+        job.interviewSheduled = interviewSheduled || job.interviewSheduled;
 
         // Update `allotedTo` only if it has changed
         if (allotedTo && allotedTo !== previousAllotedTo) {
