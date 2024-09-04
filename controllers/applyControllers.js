@@ -94,7 +94,7 @@ const getShortlistedCandidatesByJob = asyncHandler(async (req, res) => {
         // Find candidates with the status "shortlisted"
         const shortlistedCandidates = await Candidate.find({
             _id: { $in: candidateIds },
-            status: "shortlisted"
+            status: { $in: ["shortlisted", "Selected", "Interview Scheduled"] }
         });
 
         res.status(200).json(shortlistedCandidates);
