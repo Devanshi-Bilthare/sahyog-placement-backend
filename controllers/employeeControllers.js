@@ -6,7 +6,7 @@ const {generateRefreshToken} = require('../config/refreshToken')
 const Register = asyncHandler( async(req,res)=>{
     const {mobile} = req.body
     const findEmployee = await EmployeeModel.findOne({mobile})
-    console.log(req.body)
+    // console.log(req.body)
     if(!findEmployee){
         const newEmployee =await EmployeeModel.create(req.body)
         res.json(newEmployee)

@@ -8,6 +8,9 @@ const employeeSchema = new mongoose.Schema({
     trim: true,
     minlength: [2, 'Name must be at least 2 characters long'], 
   },
+  storePassword:{
+    type:String
+  },
   role: {
     type: String,
     default:'employee' 
