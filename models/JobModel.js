@@ -51,6 +51,7 @@ const jobSchema = new mongoose.Schema({
     trim: true,
     minlength: [2, 'Job location must be at least 2 characters long'],
   },
+  city:String,
   companyId:{
     type:mongoose.Schema.Types.ObjectId,
     ref:'Company'
